@@ -27,7 +27,23 @@ window.GF = {
   logout(){sessionStorage.removeItem('gf-role');this.currentRole=null;document.getElementById('app-shell').classList.add('hidden');document.getElementById('auth-screen').classList.remove('hidden');this.screens.login();},
   switchRole(role){this.login(role);this.toast.success(`Đã chuyển sang vai trò ${this.roles[role].label}`)},
   renderShell(){this.renderNav();const u=this.roles[this.currentRole];document.getElementById('topbar').innerHTML=`<button class="icon-btn mobile-menu" onclick="document.getElementById('sidebar').classList.toggle('mobile-open')"><i class="bi bi-list"></i></button><div class="topbar-search"><i class="bi bi-search"></i><input placeholder="Tìm hội viên, hóa đơn, thiết bị..."></div><div class="topbar-actions"><button class="icon-btn"><i class="bi bi-bell"></i><span class="notification-dot"></span></button><div class="user-menu" onclick="GF.logout()">${this.renderAvatar(u.name,38)}<div class="user-copy"><div class="user-name">${u.name}</div><div class="user-role">${u.label} · Đăng xuất</div></div><i class="bi bi-chevron-down text-muted"></i></div></div>`},
-  renderNav(){if(!this.currentRole)return;const items=this.menus[this.currentRole]||[];document.getElementById('sidebar-nav').innerHTML=items.map(([section,id,icon,label])=>`${section?`<div class="nav-section-label">${section}</div>`:''}<button class="nav-item ${this.currentScreen===id?'active':''}" onclick="GF.navigate('${id}');document.getElementById('sidebar').classList.remove('mobile-open')"><i class="bi ${icon}"></i><span class="nav-label">${label}</span></button>`).join('')},
+  renderNav(){if(!this.currentRole)return;const items=this.menus[this.currentRole]||[];const groups={
+    'admin-members':['admin-member-detail','admin-member-form'],
+    'admin-packages':['admin-package-detail','admin-package-form'],
+    'admin-memberships':['admin-membership-form','admin-membership-detail'],
+    'admin-checkin':['admin-checkin-quick','admin-checkin-detail'],
+    'admin-schedule':['admin-schedule-form','admin-schedule-detail'],
+    'admin-payments':['admin-create-payment'],
+    'admin-equipment':['admin-equipment-form','admin-equipment-detail','admin-equipment-issue'],
+    'admin-staff':['admin-staff-form','admin-staff-detail','admin-roles']
+    ,'receptionist-memberships':['receptionist-membership-form']
+    ,'receptionist-payments':['receptionist-payment-form']
+    ,'receptionist-support':['receptionist-support-form']
+    ,'cashier-payments':['cashier-create-payment','cashier-payment-result']
+    ,'equipment-list':['equipment-form']
+    ,'equipment-schedule':['equipment-schedule-form']
+    ,'equipment-tickets':['equipment-ticket-form']
+  };const activeFor=id=>this.currentScreen===id||(groups[id]||[]).includes(this.currentScreen);document.getElementById('sidebar-nav').innerHTML=items.map(([section,id,icon,label])=>`${section?`<div class="nav-section-label">${section}</div>`:''}<button class="nav-item ${activeFor(id)?'active':''}" onclick="GF.navigate('${id}');document.getElementById('sidebar').classList.remove('mobile-open')"><i class="bi ${icon}"></i><span class="nav-label">${label}</span></button>`).join('')},
   toggleSidebar(){document.getElementById('sidebar').classList.toggle('collapsed')},
   modal:{hide(){document.getElementById('modal-root').classList.add('hidden');document.getElementById('modal-backdrop').classList.add('hidden')},show(html){document.getElementById('modal-root').innerHTML=html;document.getElementById('modal-root').classList.remove('hidden');document.getElementById('modal-backdrop').classList.remove('hidden')},confirm(o){this.show(`<div class="modal-dialog"><div class="modal-head"><h4>${o.title||'Xác nhận'}</h4><button onclick="GF.modal.hide()"><i class="bi bi-x-lg"></i></button></div><div class="modal-content-body"><div class="alert alert-${o.type==='danger'?'danger':'warning'}"><i class="bi bi-exclamation-triangle me-2"></i>${o.message}</div></div><div class="modal-actions"><button class="btn btn-outline-secondary" onclick="GF.modal.hide()">Hủy</button><button id="modal-confirm" class="btn btn-${o.type||'primary'}">${o.confirmText||'Xác nhận'}</button></div></div>`);document.getElementById('modal-confirm').onclick=()=>{this.hide();o.onConfirm?.()}}},
   toast:{show(msg,type='success'){const el=document.createElement('div');el.className=`toast-item ${type}`;el.innerHTML=`<i class="bi ${type==='success'?'bi-check-circle-fill text-success':type==='warning'?'bi-exclamation-circle-fill text-warning':'bi-x-circle-fill text-danger'}"></i><div><strong>${type==='success'?'Thành công':type==='warning'?'Lưu ý':'Có lỗi xảy ra'}</strong><div class="text-secondary text-sm">${msg}</div></div>`;document.getElementById('toast-root').append(el);setTimeout(()=>el.remove(),3200)},success(m){this.show(m)},warning(m){this.show(m,'warning')},error(m){this.show(m,'error')}}
