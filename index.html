@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GymFlow &#8211; H&#7879; th&#7889;ng qu&#7843;n l&yacute; ph&ograve;ng t&#7853;p Gym</title>
+    <meta name="description" content="GymFlow - H&#7879; th&#7889;ng qu&#7843;n l&yacute; ph&ograve;ng t&#7853;p gym chuy&ecirc;n nghi&#7879;p, hi&#7879;n &#273;&#7841;i">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/screens.css">
+</head>
+<body>
+    <!-- Man hinh dang nhap -->
+    <div id="auth-screen"></div>
+    
+    <!-- App Shell -->
+    <div id="app-shell" class="app-shell hidden">
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-logo">
+                <div class="logo-icon"><i class="bi bi-lightning-charge-fill"></i></div>
+                <span class="logo-text">GymFlow</span>
+            </div>
+            <nav id="sidebar-nav" class="sidebar-nav"></nav>
+            <div class="sidebar-footer">
+                <button class="sidebar-collapse-btn" onclick="GF.toggleSidebar()" title="Thu/Mo menu">
+                    <i class="bi bi-layout-sidebar-reverse"></i>
+                </button>
+            </div>
+        </aside>
+        <div class="main-area">
+            <header class="topbar" id="topbar"></header>
+            <main class="main-content" id="main-content"></main>
+        </div>
+    </div>
+    
+    <!-- Modal -->
+    <div id="modal-backdrop" class="modal-backdrop hidden" onclick="GF.modal.hide()"></div>
+    <div id="modal-root" class="modal-root hidden"></div>
+    
+    <!-- Toast -->
+    <div id="toast-root" class="toast-root"></div>
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/receptionist.js"></script>
+    <script src="js/cashier.js"></script>
+    <script src="js/pt.js"></script>
+    <script src="js/equipment.js"></script>
+    <script src="js/member.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

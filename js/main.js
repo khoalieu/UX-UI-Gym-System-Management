@@ -1,0 +1,1 @@
+document.addEventListener('DOMContentLoaded',()=>{const role=sessionStorage.getItem('gf-role');if(role&&GF.roles[role])GF.login(role);else{document.getElementById('auth-screen').classList.remove('hidden');GF.screens.login()}});
